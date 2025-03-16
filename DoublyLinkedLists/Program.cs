@@ -1,4 +1,4 @@
-﻿namespace DataStructuresAlgorithms;
+﻿namespace DoublyLinkedList;
 
 class Program
 {
