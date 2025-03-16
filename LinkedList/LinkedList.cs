@@ -50,11 +50,15 @@ public class LinkedList
     public Node? RemoveFirst()
     {
         if (_length == 0) return null;
+
         Node temp = _head!;
         _head = _head!.Next;
         temp.Next = null;
+
         _length--;
+
         if (_length == 0) _tail = null;
+
         return temp;
     }
 
@@ -80,6 +84,19 @@ public class LinkedList
             _head = null;
             _tail = null;
         }
+
+        return temp;
+    }
+
+    public Node? Get(int index)
+    {
+        if (index < 0 || index >= _length) return null;
+
+        Node temp = _head!;
+
+        for (var i = 0; i < index; i++)
+            if (temp.Next != null)
+                temp = temp.Next;
 
         return temp;
     }

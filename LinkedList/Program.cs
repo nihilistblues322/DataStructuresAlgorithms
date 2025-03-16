@@ -10,7 +10,8 @@ class Program
         linkedList.Append(152);
         // linkedList.RemoveLast();
         // linkedList.Prepend(54);
-        linkedList.RemoveFirst();
+        // linkedList.RemoveFirst();
+        Console.WriteLine(linkedList.Get(1)!.Value);
 
 
         linkedList.PrintVisual();
