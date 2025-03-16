@@ -101,6 +101,42 @@ public class LinkedList
         return temp;
     }
 
+    public bool Set(int index, int value)
+    {
+        Node? temp = Get(index);
+        if (temp != null)
+        {
+            temp.Value = value;
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool Insert(int index, int value)
+    {
+        if (index < 0 || index > _length) return false;
+        if (index == 0)
+        {
+            Prepend(value);
+            return true;
+        }
+
+        if (index == _length)
+        {
+            Append(value);
+        }
+
+        Node newNode = new Node(value);
+        Node temp = Get(index - 1)!;
+        
+        newNode.Next = temp.Next;
+        temp.Next = newNode;
+        
+        _length++;
+        return true;
+    }
+
     public void PrintList()
     {
         Node temp = _head;
