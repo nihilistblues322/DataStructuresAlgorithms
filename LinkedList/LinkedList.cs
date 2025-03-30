@@ -129,12 +129,28 @@ public class LinkedList
 
         Node newNode = new Node(value);
         Node temp = Get(index - 1)!;
-        
+
         newNode.Next = temp.Next;
         temp.Next = newNode;
-        
+
         _length++;
         return true;
+    }
+
+    public Node? Remove(int index)
+    {
+        if (index < 0 || index >= _length) return null;
+        if (index == 0) return RemoveFirst();
+        if (index == _length - 1) return RemoveLast();
+
+        Node prev = Get(index - 1)!;
+        Node temp = prev.Next!;
+        
+        prev.Next = temp.Next;
+        temp.Next = null;
+        _length--;
+        
+        return temp;
     }
 
     public void PrintList()
@@ -145,6 +161,25 @@ public class LinkedList
             Console.WriteLine(temp.Value);
             temp = temp.Next;
         }
+    }
+
+    public void Reverse()
+    {
+        Node temp = _head;
+        _head = _tail;
+        _tail = temp;
+        
+        Node after = temp.Next;
+        Node? before = null;
+        
+        for (var i = 0; i < _length; i++)
+        {
+            after = temp.Next;
+            temp.Next = before;
+            before = temp;
+            temp = after;
+        }
+
     }
 
     public void GetHead()
