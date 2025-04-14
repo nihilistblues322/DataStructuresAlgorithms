@@ -24,7 +24,7 @@ public class DoublyLinkedList
             _head = newNode;
             _tail = newNode;
         }
-        else if (_tail != null) // Проверка на null перед использованием
+        else
         {
             _tail.Next = newNode;
             newNode.Prev = _tail;
@@ -36,7 +36,7 @@ public class DoublyLinkedList
 
     public Node? RemoveLast()
     {
-        if (_length == 0 || _tail == null) return null;
+        if (_length == 0) return null;
 
         Node temp = _tail;
 
@@ -45,7 +45,7 @@ public class DoublyLinkedList
             _head = null;
             _tail = null;
         }
-        else if (_tail.Prev != null) // Проверка на null перед использованием
+        else
         {
             _tail = _tail.Prev;
             _tail.Next = null;
@@ -55,6 +55,24 @@ public class DoublyLinkedList
         _length--;
 
         return temp;
+    }
+
+    public void Prepend(int value)
+    {
+        Node newNode = new Node(value);
+        if (_length == 0)
+        {
+            _head = newNode;
+            _tail = newNode;
+        }
+        else
+        {
+            newNode.Next = _head;
+            _head.Prev = newNode;
+            _head = newNode;
+        }
+
+        _length++;
     }
 
     public void PrintVisual()
@@ -67,7 +85,7 @@ public class DoublyLinkedList
 
         Console.WriteLine("\nDoubly Linked List Visualization (forward):");
 
-        Node? temp = _head;
+        Node temp = _head;
         while (temp != null)
         {
             Console.Write("+-----+");
