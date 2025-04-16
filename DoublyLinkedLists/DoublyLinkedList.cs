@@ -27,7 +27,7 @@ public class DoublyLinkedList
         }
         else
         {
-            _tail.Next = newNode;
+            _tail!.Next = newNode;
             newNode.Prev = _tail;
             _tail = newNode;
         }
@@ -39,7 +39,7 @@ public class DoublyLinkedList
     {
         if (_length == 0) return null;
 
-        Node temp = _tail;
+        Node temp = _tail!;
 
         if (_length == 1)
         {
@@ -48,8 +48,8 @@ public class DoublyLinkedList
         }
         else
         {
-            _tail = _tail.Prev;
-            _tail.Next = null;
+            _tail = _tail!.Prev;
+            _tail!.Next = null;
             temp.Prev = null;
         }
 
@@ -70,7 +70,7 @@ public class DoublyLinkedList
         else
         {
             newNode.Next = _head;
-            _head.Prev = newNode;
+            _head!.Prev = newNode;
             _head = newNode;
         }
 
@@ -81,7 +81,7 @@ public class DoublyLinkedList
     {
         if (_length == 0) return null;
 
-        Node temp = _head;
+        Node temp = _head!;
 
         if (_length == 1)
         {
@@ -90,8 +90,8 @@ public class DoublyLinkedList
         }
         else
         {
-            _head = _head.Next;
-            _head.Prev = null;
+            _head = _head!.Next;
+            _head!.Prev = null;
             temp.Next = null;
         }
 
@@ -104,26 +104,56 @@ public class DoublyLinkedList
     {
         if (index < 0 || index >= _length) return null;
 
-        Node temp = _head;
+        Node temp = _head!;
 
         if (index < _length / 2)
         {
             for (var i = 0; i < index; i++)
             {
-                temp = temp.Next;
+                temp = temp.Next!;
             }
         }
         else
         {
-            temp = _tail;
+            temp = _tail!;
 
             for (var i = _length - 1; i > index; i--)
             {
-                temp = temp.Prev;
+                temp = temp.Prev!;
             }
         }
 
         return temp;
+    }
+
+    public bool Insert(int index, int value)
+    {
+        if (index < 0 || index >= _length) return false;
+
+        if (index == 0)
+        {
+            Prepend(value);
+            return true;
+        }
+
+        if (index == _length)
+        {
+            Append(value);
+            return true;
+        }
+
+        Node newNode = new Node(value);
+        Node before = Get(index - 1)!;
+        Node after = before.Next!;
+
+        newNode.Next = after;
+        newNode.Prev = before;
+        before.Next = newNode;
+        after.Prev = newNode;
+
+        _length++;
+
+        return true;
     }
 
     public bool Set(int index, int value)
@@ -149,7 +179,7 @@ public class DoublyLinkedList
 
         Console.WriteLine("\nDoubly Linked List Visualization (forward):");
 
-        Node temp = _head;
+        Node temp = _head!;
         while (temp != null)
         {
             Console.Write("+-----+");
@@ -160,7 +190,7 @@ public class DoublyLinkedList
 
         Console.WriteLine();
 
-        temp = _head;
+        temp = _head!;
         while (temp != null)
         {
             Console.Write("|  " + temp.Value.ToString().PadRight(2) + " |");
@@ -171,7 +201,7 @@ public class DoublyLinkedList
 
         Console.WriteLine();
 
-        temp = _head;
+        temp = _head!;
         while (temp != null)
         {
             Console.Write("+-----+");
@@ -184,7 +214,7 @@ public class DoublyLinkedList
 
         Console.WriteLine("Doubly Linked List Visualization (backward):");
 
-        temp = _tail;
+        temp = _tail!;
         while (temp != null)
         {
             Console.Write("+-----+");
@@ -195,7 +225,7 @@ public class DoublyLinkedList
 
         Console.WriteLine();
 
-        temp = _tail;
+        temp = _tail!;
         while (temp != null)
         {
             Console.Write("|  " + temp.Value.ToString().PadRight(2) + " |");
@@ -206,7 +236,7 @@ public class DoublyLinkedList
 
         Console.WriteLine();
 
-        temp = _tail;
+        temp = _tail!;
         while (temp != null)
         {
             Console.Write("+-----+");
