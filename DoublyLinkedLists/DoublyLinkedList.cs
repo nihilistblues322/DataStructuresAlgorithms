@@ -75,6 +75,52 @@ public class DoublyLinkedList
         _length++;
     }
 
+    public Node? RemoveFirst()
+    {
+        if (_length == 0) return null;
+
+        Node temp = _head;
+        if (_length == 1)
+        {
+            _head = null;
+            _tail = null;
+        }
+        else
+        {
+            _head = _head.Next;
+            _head.Prev = null;
+            temp.Next = null;
+        }
+
+        _length--;
+
+        return temp;
+    }
+
+    public Node? Get(int index)
+    {
+        if (index < 0 || index >= _length) return null;
+
+        Node temp = _head;
+        if (index < _length / 2)
+        {
+            for (var i = 0; i < index; i++)
+            {
+                temp = temp.Next;
+            }
+        }
+        else
+        {
+            temp = _tail;
+            for (var i = _length - 1; i > index; i--)
+            {
+                temp = temp.Prev;
+            }
+        }
+
+        return temp;
+    }
+
     public void PrintVisual()
     {
         if (_head == null)
