@@ -8,12 +8,13 @@ class Program
         myDll.Append(2);
         myDll.Append(3);
         myDll.Append(4);
+        myDll.Set(2, 99);
         // myDll.RemoveLast();
         // myDll.Prepend(14);
         // myDll.RemoveFirst();
-        Console.WriteLine(myDll.Get(1).Value);
-        Console.WriteLine(myDll.Get(2).Value);
-        
+        // Console.WriteLine(myDll.Get(1).Value);
+        // Console.WriteLine(myDll.Get(2).Value);
+        //
    
         
         myDll.PrintVisual();

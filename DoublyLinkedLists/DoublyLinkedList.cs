@@ -12,6 +12,7 @@ public class DoublyLinkedList
 
         _head = newNode;
         _tail = newNode;
+
         _length = 1;
     }
 
@@ -60,6 +61,7 @@ public class DoublyLinkedList
     public void Prepend(int value)
     {
         Node newNode = new Node(value);
+
         if (_length == 0)
         {
             _head = newNode;
@@ -80,6 +82,7 @@ public class DoublyLinkedList
         if (_length == 0) return null;
 
         Node temp = _head;
+
         if (_length == 1)
         {
             _head = null;
@@ -102,6 +105,7 @@ public class DoublyLinkedList
         if (index < 0 || index >= _length) return null;
 
         Node temp = _head;
+
         if (index < _length / 2)
         {
             for (var i = 0; i < index; i++)
@@ -112,6 +116,7 @@ public class DoublyLinkedList
         else
         {
             temp = _tail;
+
             for (var i = _length - 1; i > index; i--)
             {
                 temp = temp.Prev;
@@ -119,6 +124,19 @@ public class DoublyLinkedList
         }
 
         return temp;
+    }
+
+    public bool Set(int index, int value)
+    {
+        Node? temp = Get(index);
+
+        if (temp != null)
+        {
+            temp.Value = value;
+            return true;
+        }
+
+        return false;
     }
 
     public void PrintVisual()
