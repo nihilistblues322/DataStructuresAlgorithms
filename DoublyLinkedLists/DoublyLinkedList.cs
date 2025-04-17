@@ -169,6 +169,24 @@ public class DoublyLinkedList
         return false;
     }
 
+    public Node? Remove(int index)
+    {
+        if (index < 0 || index >= _length) return null;
+        if (index == 0) return RemoveFirst();
+        if (index == _length - 1) return RemoveLast();
+
+        Node temp = Get(index)!;
+
+        temp.Next!.Prev = temp.Prev;
+        temp.Prev!.Next = temp.Next;
+        temp.Next = null;
+        temp.Prev = null;
+
+        _length--;
+
+        return temp;
+    }
+
     public void PrintVisual()
     {
         if (_head == null)

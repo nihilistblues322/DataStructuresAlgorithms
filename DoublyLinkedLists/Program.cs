@@ -15,6 +15,7 @@ class Program
         myDll.RemoveFirst();
         Console.WriteLine(myDll.Get(1)!.Value);
         Console.WriteLine(myDll.Get(2)!.Value);
+        myDll.Remove(2);
         
    
         
