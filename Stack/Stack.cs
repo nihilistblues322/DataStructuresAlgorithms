@@ -29,6 +29,19 @@ public class Stack
         _height++;
     }
 
+    public Node? Pop()
+    {
+        if (_height == 0) return null;
+
+        Node temp = _top;
+        _top = _top.Next!;
+        temp.Next = null;
+
+        _height--;
+        
+        return temp;
+    }
+
     public void PrintVisual()
     {
         if (_top == null)
