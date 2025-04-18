@@ -12,6 +12,23 @@ public class Stack
         _height = 1;
     }
 
+    public void Push(int value)
+    {
+        Node newNode = new Node(value);
+
+        if (_height == 0)
+        {
+            _top = newNode;
+        }
+        else
+        {
+            newNode.Next = _top;
+            _top = newNode;
+        }
+
+        _height++;
+    }
+
     public void PrintVisual()
     {
         if (_top == null)
@@ -20,21 +37,23 @@ public class Stack
             return;
         }
 
-        Console.WriteLine("\nStack Visualization:");
+        Console.WriteLine("\nStack Visualization (TOP to BOTTOM):");
         Console.WriteLine("-------------------");
+        Console.WriteLine("  TOP");
 
         Node current = _top;
         int position = _height;
 
         while (current != null)
         {
-            Console.WriteLine($"| {current.Value.ToString(),3} |");
             Console.WriteLine("+-----+");
+            Console.WriteLine($"| {current.Value.ToString(),3} |");
             current = current.Next;
             position--;
         }
 
-        Console.WriteLine("  TOP");
-        Console.WriteLine($"Stack height: {_height}\n");
+        Console.WriteLine("+-----+");
+        Console.WriteLine("  BOTTOM");
+        Console.WriteLine($"\nStack height: {_height}\n");
     }
 }
