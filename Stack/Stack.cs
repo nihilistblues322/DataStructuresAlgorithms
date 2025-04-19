@@ -38,7 +38,7 @@ public class Stack
         temp.Next = null;
 
         _height--;
-        
+
         return temp;
     }
 
@@ -59,14 +59,28 @@ public class Stack
 
         while (current != null)
         {
-            Console.WriteLine("+-----+");
+            Console.WriteLine("+-----------+");
             Console.WriteLine($"| {current.Value.ToString(),3} |");
+            Console.WriteLine("+-----------+");
+
+            if (current.Next != null)
+            {
+                Console.WriteLine("    |");
+                Console.WriteLine("    ↓ next");
+                Console.WriteLine($"    Points to: {current.Next.Value}");
+            }
+            else
+            {
+                Console.WriteLine("    |");
+                Console.WriteLine("    ↓ next");
+                Console.WriteLine("    NULL (bottom of stack)");
+                Console.WriteLine("  BOTTOM");
+            }
+
             current = current.Next;
             position--;
         }
 
-        Console.WriteLine("+-----+");
-        Console.WriteLine("  BOTTOM");
         Console.WriteLine($"\nStack height: {_height}\n");
     }
 }

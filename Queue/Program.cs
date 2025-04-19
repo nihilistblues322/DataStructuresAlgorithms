@@ -6,6 +6,10 @@ class Program
     {
         Queue myQueue = new Queue(1);
         
+        myQueue.Enqueue(2);
+        myQueue.Dequeue();
+        myQueue.Dequeue();
+        
         myQueue.PrintVisual();
     }
 }

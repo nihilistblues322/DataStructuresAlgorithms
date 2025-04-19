@@ -1,54 +1,97 @@
-﻿namespace Queue;
+﻿using System.Text;
+
+namespace Queue;
 
 public class Queue
 {
-    private Node _first;
-    private Node _last;
+    private Node? _first;
+    private Node? _last;
     private int _length;
 
     public Queue(int value)
     {
         Node newNode = new Node(value);
+
         _first = newNode;
         _last = newNode;
+
         _length = 1;
+    }
+
+    public void Enqueue(int value)
+    {
+        Node newNode = new Node(value);
+
+        if (_length == 0)
+        {
+            _first = newNode;
+            _last = newNode;
+        }
+        else
+        {
+            _last.Next = newNode;
+            _last = newNode;
+        }
+
+        _length++;
+    }
+
+    public Node? Dequeue()
+    {
+        if (_length == 0 || _first == null)
+        {
+            return null;
+        }
+
+        Node temp = _first;
+
+        if (_length == 1)
+        {
+            _first = null;
+            _last = null;
+        }
+        else
+        {
+            _first = _first.Next;
+            temp.Next = null;
+        }
+
+        _length--;
+
+        return temp;
     }
 
     public void PrintVisual()
     {
-        if (_first == null)
+        Console.WriteLine("\n--- Queue Visualization ---");
+        if (_length == 0)
         {
-            Console.WriteLine("Queue is empty");
+            Console.WriteLine("Queue is empty.");
+            Console.WriteLine($"Length: {_length}");
+            Console.WriteLine("-------------------------\n");
             return;
         }
 
-        Console.WriteLine("\nQueue Visualization (FIRST to LAST):");
-        Console.WriteLine("-------------------");
-        Console.WriteLine("  FIRST");
-
+        StringBuilder sb = new StringBuilder();
         Node current = _first;
-        int position = 1;
+
+        sb.Append("FIRST -> ");
 
         while (current != null)
         {
-            Console.WriteLine("+-----+");
-            Console.WriteLine($"| {current.Value.ToString(),3} |");
-
-            if (current.Next == null)
+            sb.Append($"[ {current.Value} ]");
+            if (current.Next != null)
             {
-                Console.WriteLine("+-----+");
-                Console.WriteLine("  LAST");
-            }
-            else
-            {
-                Console.WriteLine("+-----+");
-                Console.WriteLine("    ↓");
+                sb.Append(" -> ");
             }
 
-            current = current.Next;
-            position++;
+            current = current.Next!;
         }
 
-        Console.WriteLine($"\nQueue length: {_length}\n");
+        sb.Append(" <- LAST");
+
+        Console.WriteLine(sb.ToString());
+        Console.WriteLine($"Length: {_length}");
+        Console.WriteLine("-------------------------\n");
     }
 }
