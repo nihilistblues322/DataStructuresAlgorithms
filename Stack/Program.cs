@@ -18,6 +18,7 @@ class Program
         
         
         ArrayStack myArrayStack = new ArrayStack(10);
+        
         myArrayStack.Push(100);
         myArrayStack.Push(200);
         myArrayStack.Push(300);
