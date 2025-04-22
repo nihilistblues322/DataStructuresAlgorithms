@@ -1,0 +1,73 @@
+﻿namespace BinarySearchTree;
+
+public class BinarySearchTree
+{
+    private Node? _root;
+
+    public bool Insert(int value)
+    {
+        Node newNode = new Node(value);
+
+        if (_root == null)
+        {
+            _root = newNode;
+            return true;
+        }
+
+        Node pointer = _root;
+
+        while (true)
+        {
+            if (value == pointer.Value) return false;
+
+            if (value < pointer.Value)
+            {
+                if (pointer.Left == null)
+                {
+                    pointer.Left = newNode;
+                    return true;
+                }
+
+                pointer = pointer.Left;
+            }
+            else
+            {
+                if (pointer.Right == null)
+                {
+                    pointer.Right = newNode;
+                    return true;
+                }
+
+                pointer = pointer.Right;
+            }
+        }
+    }
+
+    public void PrintTree()
+    {
+        Console.OutputEncoding = System.Text.Encoding.UTF8;
+        PrintNode(_root, "", true);
+    }
+
+    private void PrintNode(Node? node, string indent, bool isRight, int level = 0)
+    {
+        if (node == null) return;
+
+        ConsoleColor[] colors =
+        [
+            ConsoleColor.Magenta, ConsoleColor.Cyan,
+            ConsoleColor.Yellow, ConsoleColor.Green
+        ];
+
+        PrintNode(node.Right, indent + (isRight ? "    " : "│   "), true, level + 1);
+
+        Console.Write(indent);
+        Console.Write(isRight ? "┌── " : "└── ");
+
+        Console.ForegroundColor = level < colors.Length ? colors[level] : ConsoleColor.Gray;
+        Console.WriteLine(node.Value);
+        Console.ResetColor();
+
+        PrintNode(node.Left, indent + (isRight ? "│   " : "    "), false, level + 1);
+    }
+}
