@@ -43,6 +43,29 @@ public class BinarySearchTree
         }
     }
 
+    public bool Contains(int value)
+    {
+        Node? pointer = _root;
+        
+        while (pointer != null)
+        {
+            if (value < pointer.Value)
+            {
+                pointer = pointer.Left;
+            }
+            else if (value > pointer.Value)
+            {
+                pointer = pointer.Right;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public void PrintTree()
     {
         Console.OutputEncoding = System.Text.Encoding.UTF8;
