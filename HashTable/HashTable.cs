@@ -1,10 +1,11 @@
-﻿namespace HashTable;
+﻿using System.Text;
+
+namespace HashTable;
 
 public class HashTable
 {
     private int _size = 7;
     private Node?[] _dataMap;
-
     private const int PrimeMultiplier = 23;
     private static int _count = 0;
 
@@ -21,21 +22,6 @@ public class HashTable
                 .Aggregate(0,
                     (currentHash, character) => (currentHash + character * PrimeMultiplier) % _dataMap.Length);
         }
-    }
-
-    private int OldHash(string key)
-    {
-        int hash = 0;
-
-        char[] keyChars = key.ToCharArray();
-
-        for (int i = 0; i < keyChars.Length; i++)
-        {
-            int asciiValue = keyChars[i];
-            hash = (hash + asciiValue * 23) % _dataMap.Length;
-        }
-
-        return hash;
     }
 
     public void Set(string key, int value)
@@ -68,7 +54,7 @@ public class HashTable
                 {
                     current.Next = newNode;
                     _count++;
-                    return;
+                    break;
                 }
 
                 current = current.Next;
@@ -77,7 +63,7 @@ public class HashTable
 
         if ((double)_count / _size > 0.7)
         {
-            Console.WriteLine("\nResize table, LoadFactor > 70%");
+            PrintResizeNotification();
             Resize();
         }
     }
@@ -85,14 +71,13 @@ public class HashTable
     public int Get(string key)
     {
         int index = Hash(key);
-
         Node? current = _dataMap[index];
 
         while (current != null)
         {
             if (string.Equals(current.Key, key, StringComparison.Ordinal))
             {
-                Console.WriteLine($" Found key '{key}' with Value = {current.Value}");
+                PrintFoundKey(key, current.Value);
                 return current.Value;
             }
 
@@ -102,13 +87,29 @@ public class HashTable
         return 0;
     }
 
+    public List<string> Keys()
+    {
+        List<string> keys = new List<string>();
+
+        for (int i = 0; i < _dataMap.Length; i++)
+        {
+            Node? current = _dataMap[i];
+            while (current != null)
+            {
+                keys.Add(current.Key);
+                current = current.Next;
+            }
+        }
+
+        PrintKeys(keys);
+        return keys;
+    }
+
     private void Resize()
     {
         int newSize = _size * 2;
         Node?[] newDataMap = new Node[newSize];
-
         Node?[] oldDataMap = _dataMap;
-
 
         _dataMap = newDataMap;
         _size = newSize;
@@ -127,7 +128,6 @@ public class HashTable
     private void RehashAndInsert(string key, int value)
     {
         int index = Hash(key);
-
         Node newNode = new Node(key, value);
 
         if (_dataMap[index] == null)
@@ -137,7 +137,6 @@ public class HashTable
         else
         {
             Node current = _dataMap[index]!;
-
             while (current.Next != null)
             {
                 current = current.Next;
@@ -147,46 +146,100 @@ public class HashTable
         }
     }
 
-
     public void PrintTable()
     {
-        Console.OutputEncoding = System.Text.Encoding.UTF8;
-        Console.ForegroundColor = ConsoleColor.DarkYellow;
-        Console.WriteLine("\nHash Table:");
-        Console.ResetColor();
+        Console.OutputEncoding = Encoding.UTF8;
+        PrintTableHeader();
 
         for (int i = 0; i < _size; i++)
         {
-            Console.ForegroundColor = ConsoleColor.DarkCyan;
-            Console.Write($"[{i}] ");
-            Console.ResetColor();
-
-            Node? current = _dataMap[i];
-            if (current == null)
-            {
-                Console.WriteLine("∅");
-                continue;
-            }
-
-            while (current != null)
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write($"{current.Key}");
-                Console.ResetColor();
-                Console.Write(" → ");
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write($"{current.Value}");
-                Console.ResetColor();
-
-                current = current.Next;
-                if (current != null) Console.Write(" ║ ");
-            }
-
-            Console.WriteLine();
+            PrintTableRow(i, _dataMap[i]);
         }
 
+        PrintTableFooter();
+    }
+
+    #region Print Methods
+
+    private void PrintResizeNotification()
+    {
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine("\n⚠ Resizing table: LoadFactor > 70%");
+        Console.ResetColor();
+    }
+
+    private void PrintFoundKey(string key, int value)
+    {
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine($" 🔍 Found key '{key}' with Value = {value}");
+        Console.ResetColor();
+    }
+
+    private void PrintKeys(List<string> keys)
+    {
+        Console.OutputEncoding = Encoding.UTF8;
+        Console.ForegroundColor = ConsoleColor.DarkYellow;
+        Console.WriteLine("\n╔══════════════════════════════╗");
+        Console.WriteLine("║         All Keys Found       ║");
+        Console.WriteLine("╠══════════════════════════════╣");
+
+        for (int i = 0; i < keys.Count; i++)
+        {
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write("║ ");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write($"{i + 1}. {keys[i]}".PadRight(28));
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine(" ║");
+        }
+
+        Console.WriteLine("╚══════════════════════════════╝");
+        Console.ResetColor();
+        Console.WriteLine($"Total keys: {keys.Count}");
+    }
+
+    private void PrintTableHeader()
+    {
+        Console.ForegroundColor = ConsoleColor.DarkYellow;
+        Console.WriteLine("\nHash Table:");
+        Console.ResetColor();
+    }
+
+    private void PrintTableRow(int index, Node? node)
+    {
+        Console.ForegroundColor = ConsoleColor.DarkCyan;
+        Console.Write($"[{index}] ");
+        Console.ResetColor();
+
+        if (node == null)
+        {
+            Console.WriteLine("∅");
+            return;
+        }
+
+        while (node != null)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write($"{node.Key}");
+            Console.ResetColor();
+            Console.Write(" → ");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write($"{node.Value}");
+            Console.ResetColor();
+
+            node = node.Next;
+            if (node != null) Console.Write(" ║ ");
+        }
+
+        Console.WriteLine();
+    }
+
+    private void PrintTableFooter()
+    {
         Console.ForegroundColor = ConsoleColor.DarkYellow;
         Console.WriteLine("➾ Size: " + _size);
         Console.ResetColor();
     }
+
+    #endregion
 }

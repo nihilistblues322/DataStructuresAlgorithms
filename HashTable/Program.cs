@@ -14,13 +14,11 @@ class Program
         hashTable.Set("pizza", 321);
         hashTable.Set("potato", 322);
         hashTable.Set("carrots", 77);
-        hashTable.Set("qwe", 876);
-        hashTable.Set("asd", 765);
-        hashTable.Set("bacon", 786);
-
-
+        
         hashTable.Get("milk");
         hashTable.Get("potato");
+
+        hashTable.Keys();
 
         hashTable.PrintTable();
     }
