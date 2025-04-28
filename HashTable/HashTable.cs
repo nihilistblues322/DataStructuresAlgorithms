@@ -89,11 +89,11 @@ public class HashTable
 
     public List<string> Keys()
     {
-        List<string> keys = new List<string>();
+        List<string> keys = [];
 
-        for (int i = 0; i < _dataMap.Length; i++)
+        foreach (var t in _dataMap)
         {
-            Node? current = _dataMap[i];
+            Node? current = t;
             while (current != null)
             {
                 keys.Add(current.Key);
