@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinarySearchTree", "BinaryS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HashTable", "HashTable\HashTable.csproj", "{21AEBD49-FBEC-4CFC-A9C6-7EE6008B4911}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graphs", "Graphs\Graphs.csproj", "{9B52EEFE-6045-4195-AEC4-974BF980BCA4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{21AEBD49-FBEC-4CFC-A9C6-7EE6008B4911}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21AEBD49-FBEC-4CFC-A9C6-7EE6008B4911}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{21AEBD49-FBEC-4CFC-A9C6-7EE6008B4911}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B52EEFE-6045-4195-AEC4-974BF980BCA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B52EEFE-6045-4195-AEC4-974BF980BCA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B52EEFE-6045-4195-AEC4-974BF980BCA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B52EEFE-6045-4195-AEC4-974BF980BCA4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
