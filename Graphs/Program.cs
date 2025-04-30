@@ -10,9 +10,17 @@ class Program
         graph.AddVertex("B");
         graph.AddVertex("C");
         graph.AddVertex("D");
-        graph.AddVertex("E");
+
+        graph.AddEdge("A", "B");
+        graph.AddEdge("A", "C");
+        graph.AddEdge("A", "D");
+        graph.AddEdge("B", "D");
+        graph.AddEdge("C", "D");
+        
+        graph.BreadthFirstSearch("D");
 
 
-        graph.PrintGraphWithConnections();
+        graph.PrintAdjacencyList();
+        graph.PrintAdjacencyMatrix();
     }
 }
