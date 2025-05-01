@@ -12,19 +12,28 @@ class Program
         heap.Insert(58);
 
         heap.PrintHeap();
+        heap.PrintArray();
         
-        heap.Insert(100);
-        
-        heap.PrintHeap();
-        
-        heap.Insert(75);
+        heap.Insert(21);
         
         heap.PrintHeap();
+        heap.PrintArray();
+
         
-        heap.Insert(65);
-        heap.Insert(77);
-        heap.Insert(42);
-        
+        heap.Remove();
         heap.PrintHeap();
+        heap.PrintArray();
+
+        
+        // heap.Insert(75);
+        //
+        // heap.PrintHeap();
+        //
+        // heap.Insert(65);
+        // heap.Insert(77);
+        // heap.Insert(42);
+        //
+        // heap.Remove();
+        // heap.PrintHeap();
     }
 }

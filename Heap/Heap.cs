@@ -2,29 +2,20 @@
 
 public class Heap
 {
-    private List<int> _heap;
+    private readonly List<int> _heap = [];
 
-    public Heap()
-    {
-        _heap = [];
-    }
 
-    public List<int> GetHeap()
-    {
-        return [.._heap];
-    }
-
-    private int LeftChild(int parentIndex)
+    private static int LeftChild(int parentIndex)
     {
         return 2 * parentIndex + 1;
     }
 
-    private int RightChild(int parentIndex)
+    private static int RightChild(int parentIndex)
     {
         return 2 * parentIndex + 2;
     }
 
-    private int Parent(int childIndex)
+    private static int Parent(int childIndex)
     {
         return (childIndex - 1) / 2;
     }
@@ -46,50 +37,120 @@ public class Heap
         }
     }
 
+    public int Remove()
+    {
+        if (_heap.Count == 0)
+            throw new InvalidOperationException("Heap is empty.");
+
+        int maxValue = _heap[0];
+        int lastIndex = _heap.Count - 1;
+
+        if (_heap.Count == 1)
+        {
+            _heap.RemoveAt(0);
+            return maxValue;
+        }
+
+        _heap[0] = _heap[lastIndex];
+        _heap.RemoveAt(lastIndex);
+
+        SinkDown(0);
+
+        return maxValue;
+    }
+
+    private void SinkDown(int index)
+    {
+        int maxIndex = index;
+        
+        while (true)
+        {
+            int leftIndex = LeftChild(index);
+            int rightIndex = RightChild(index);
+
+            if (leftIndex < _heap.Count && _heap[leftIndex] > _heap[maxIndex])
+            {
+                maxIndex = leftIndex;
+            }
+
+            if (rightIndex < _heap.Count && _heap[rightIndex] > _heap[maxIndex])
+            {
+                maxIndex = rightIndex;
+            }
+
+            if (maxIndex != index)
+            {
+                Swap(index, maxIndex);
+                index = maxIndex;
+            }
+            else
+            {
+                return;
+            }
+        }
+    }
+
+
     #region print
+
+    public void PrintArray()
+    {
+        Console.WriteLine("\nHeap array: [" + string.Join(", ", _heap) + "]");
+    }
+
 
     public void PrintHeap()
     {
-        Console.WriteLine("\n╔══════════════════════════════════╗");
-        Console.WriteLine("║         Heap Structure           ║");
-        Console.WriteLine("╠══════════════════════════════════╣");
+        Console.WriteLine("\n╔════════════════════════════════════════════╗");
+        Console.WriteLine("║               Heap Structure               ║");
+        Console.WriteLine("╠════════════════════════════════════════════╣");
 
         if (_heap.Count == 0)
         {
-            Console.WriteLine("║         (empty heap)             ║");
-            Console.WriteLine("╚══════════════════════════════════╝");
+            Console.WriteLine("║              (empty heap)                  ║");
+            Console.WriteLine("╚════════════════════════════════════════════╝");
             return;
         }
 
         int level = 0;
+        int index = 0;
         int itemsInLevel = 1;
-        int count = 0;
 
-        for (int i = 0; i < _heap.Count; i++)
+        while (index < _heap.Count)
         {
-            if (count == 0)
+            Console.Write($"║ Level {level}: ");
+
+            int countInThisLevel = 0;
+            while (countInThisLevel < itemsInLevel && index < _heap.Count)
             {
-                Console.Write($"║ Level {level}: ");
+                string indicator = "";
+
+                int parentIndex = Parent(index);
+
+                if (index == 0)
+                {
+                    indicator = "";
+                }
+                else if (index == LeftChild(parentIndex))
+                {
+                    indicator = "(L)";
+                }
+                else if (index == RightChild(parentIndex))
+                {
+                    indicator = "(R)";
+                }
+
+                Console.Write($"{_heap[index]}{indicator} ".PadRight(8));
+                index++;
+                countInThisLevel++;
             }
 
-            Console.Write($"{_heap[i]} ".PadRight(3));
-
-            count++;
-            if (count == itemsInLevel)
-            {
-                Console.WriteLine();
-                level++;
-                itemsInLevel *= 2;
-                count = 0;
-            }
-        }
-
-        if (count > 0)
-        {
             Console.WriteLine();
+            level++;
+            itemsInLevel *= 2;
         }
 
-        Console.WriteLine("╚══════════════════════════════════╝");
+        Console.WriteLine("╚════════════════════════════════════════════╝");
         Console.WriteLine($"➤ Total elements: {_heap.Count}");
     }
 
