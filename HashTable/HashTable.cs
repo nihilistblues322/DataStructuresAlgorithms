@@ -146,18 +146,6 @@ public class HashTable
         }
     }
 
-    public void PrintTable()
-    {
-        Console.OutputEncoding = Encoding.UTF8;
-        PrintTableHeader();
-
-        for (int i = 0; i < _size; i++)
-        {
-            PrintTableRow(i, _dataMap[i]);
-        }
-
-        PrintTableFooter();
-    }
 
     #region Print Methods
 
@@ -198,47 +186,54 @@ public class HashTable
         Console.WriteLine($"Total keys: {keys.Count}");
     }
 
-    private void PrintTableHeader()
+
+    public void PrintTable()
     {
-        Console.ForegroundColor = ConsoleColor.DarkYellow;
-        Console.WriteLine("\nHash Table:");
-        Console.ResetColor();
-    }
-
-    private void PrintTableRow(int index, Node? node)
-    {
-        Console.ForegroundColor = ConsoleColor.DarkCyan;
-        Console.Write($"[{index}] ");
-        Console.ResetColor();
-
-        if (node == null)
+        for (int i = 0; i < _size; i++)
         {
-            Console.WriteLine("∅");
-            return;
-        }
-
-        while (node != null)
-        {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write($"{node.Key}");
-            Console.ResetColor();
-            Console.Write(" → ");
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.Write($"{node.Value}");
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            string indexStr = i.ToString().PadLeft(2, '0');
+            Console.Write($"║ {indexStr} ║ ");
             Console.ResetColor();
 
-            node = node.Next;
-            if (node != null) Console.Write(" ║ ");
+            if (_dataMap[i] == null)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.WriteLine("∅".PadRight(37) + "║");
+                Console.ResetColor();
+                continue;
+            }
+
+            var sb = new StringBuilder();
+            Node? current = _dataMap[i];
+            while (current != null)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                sb.Append(current.Key);
+                Console.ResetColor();
+
+                sb.Append(" → ");
+
+                Console.ForegroundColor = ConsoleColor.Blue;
+                sb.Append(current.Value);
+                Console.ResetColor();
+
+                if (current.Next != null)
+                {
+                    sb.Append(" ║ ");
+                }
+
+                current = current.Next;
+            }
+
+            Console.WriteLine(sb.ToString().PadRight(37) + "║");
         }
 
-        Console.WriteLine();
-    }
-
-    private void PrintTableFooter()
-    {
         Console.ForegroundColor = ConsoleColor.DarkYellow;
-        Console.WriteLine("➾ Size: " + _size);
+        Console.WriteLine("╚════╩═══════════════════════════════════════╝");
         Console.ResetColor();
+
+        Console.WriteLine($"➤ Current size: {_size}, count: {_count}");
     }
 
     #endregion

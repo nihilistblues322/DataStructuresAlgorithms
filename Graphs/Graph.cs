@@ -138,7 +138,7 @@ public class Graph
 
         Console.ResetColor();
         Console.WriteLine();
-
+    
         foreach (var row in vertices)
         {
             Console.ForegroundColor = ConsoleColor.Cyan;

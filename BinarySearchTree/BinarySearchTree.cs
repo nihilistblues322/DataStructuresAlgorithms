@@ -46,7 +46,7 @@ public class BinarySearchTree
     public bool Contains(int value)
     {
         Node? pointer = _root;
-        
+
         while (pointer != null)
         {
             if (value < pointer.Value)
@@ -68,18 +68,23 @@ public class BinarySearchTree
 
     public void PrintTree()
     {
-        Console.OutputEncoding = System.Text.Encoding.UTF8;
-        PrintNode(_root, "", true);
+        PrintNode(_root, "", true, 0);
     }
 
-    private void PrintNode(Node? node, string indent, bool isRight, int level = 0)
+    private void PrintNode(Node? node, string indent, bool isRight, int level)
     {
         if (node == null) return;
 
-        ConsoleColor[] colors =
+        ConsoleColor[] levelColors =
         [
-            ConsoleColor.Magenta, ConsoleColor.Cyan,
-            ConsoleColor.Yellow, ConsoleColor.Green
+            ConsoleColor.Magenta,
+            ConsoleColor.Cyan,
+            ConsoleColor.Yellow,
+            ConsoleColor.Green,
+            ConsoleColor.Blue,
+            ConsoleColor.DarkCyan,
+            ConsoleColor.DarkYellow,
+            ConsoleColor.DarkGreen
         ];
 
         PrintNode(node.Right, indent + (isRight ? "    " : "│   "), true, level + 1);
@@ -87,7 +92,7 @@ public class BinarySearchTree
         Console.Write(indent);
         Console.Write(isRight ? "┌── " : "└── ");
 
-        Console.ForegroundColor = level < colors.Length ? colors[level] : ConsoleColor.Gray;
+        Console.ForegroundColor = level < levelColors.Length ? levelColors[level] : ConsoleColor.Gray;
         Console.WriteLine(node.Value);
         Console.ResetColor();
 

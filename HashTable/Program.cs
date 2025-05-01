@@ -18,14 +18,14 @@ class Program
         hashTable.Get("milk");
         hashTable.Get("potato");
 
-        hashTable.Keys();
+        // hashTable.Keys();
 
         hashTable.PrintTable();
 
 
-        int[] arr1 = [1, 3, 5];
-        int[] arr2 = [2, 4, 5];
-        Console.WriteLine(Test.ItemInCommon(arr1, arr2));
-        Console.WriteLine(Test.ItemInHash(arr2, arr1));
+        // int[] arr1 = [1, 3, 5];
+        // int[] arr2 = [2, 4, 5];
+        // Console.WriteLine(Test.ItemInCommon(arr1, arr2));
+        // Console.WriteLine(Test.ItemInHash(arr2, arr1));
     }
 }
