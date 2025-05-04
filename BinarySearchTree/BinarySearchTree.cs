@@ -76,6 +76,7 @@ public class BinarySearchTree
         if (current == null)
         {
             Console.WriteLine($"Reached a null node. {value} not found.");
+            
             return false;
         }
 
@@ -84,17 +85,20 @@ public class BinarySearchTree
         if (current.Value == value)
         {
             Console.WriteLine($"Found value: {value}!");
+            
             return true;
         }
 
         if (value < current.Value)
         {
             Console.WriteLine($"Going left: {value} < {current.Value}");
+            
             return RecursiveContains(current.Left, value);
         }
         else
         {
             Console.WriteLine($"Going right: {value} > {current.Value}");
+            
             return RecursiveContains(current.Right, value);
         }
     }
@@ -104,11 +108,13 @@ public class BinarySearchTree
         if (_root == null)
         {
             Console.WriteLine($"Inserting {value} as root.");
+            
             _root = new Node(value);
         }
         else
         {
             Console.WriteLine($"Starting recursive insert for {value}.");
+            
             _root = RecursiveInsert(_root, value);
         }
     }
@@ -118,17 +124,20 @@ public class BinarySearchTree
         if (current == null)
         {
             Console.WriteLine($"Inserting {value} at null position.");
+            
             return new Node(value);
         }
 
         if (value < current.Value)
         {
             Console.WriteLine($"Going left: {value} < {current.Value}");
+            
             current.Left = RecursiveInsert(current.Left, value);
         }
         else if (value > current.Value)
         {
             Console.WriteLine($"Going right: {value} > {current.Value}");
+            
             current.Right = RecursiveInsert(current.Right, value);
         }
         else
@@ -137,6 +146,81 @@ public class BinarySearchTree
         }
 
         return current;
+    }
+
+
+    public void RecursiveDelete(int value)
+    {
+        _root = RecursiveDelete(_root, value);
+    }
+
+    private Node? RecursiveDelete(Node? current, int value)
+    {
+        if (current == null)
+        {
+            Console.WriteLine($"Value {value} not found in the tree.");
+            
+            return null;
+        }
+
+        if (value < current.Value)
+        {
+            Console.WriteLine($"Going LEFT to delete {value} (current: {current.Value})");
+            
+            current.Left = RecursiveDelete(current.Left, value);
+        }
+        else if (value > current.Value)
+        {
+            Console.WriteLine($"Going RIGHT to delete {value} (current: {current.Value})");
+            
+            current.Right = RecursiveDelete(current.Right, value);
+        }
+        else
+        {
+            Console.WriteLine($"Found {value} - preparing to delete.");
+
+            if (current.Left == null && current.Right == null)
+            {
+                Console.WriteLine($" - Node {current.Value} is a leaf. Deleting.");
+                
+                return null;
+            }
+
+            if (current.Left == null)
+            {
+                Console.WriteLine($" - Node {current.Value} has only right child. Replacing with right child.");
+                
+                return current.Right;
+            }
+
+            if (current.Right == null)
+            {
+                Console.WriteLine($" - Node {current.Value} has only left child. Replacing with left child.");
+                
+                return current.Left;
+            }
+
+            Console.WriteLine($" - Node {current.Value} has TWO children. Finding min in right subtree...");
+
+            int minValue = MinValue(current.Right);
+            
+            Console.WriteLine($" - Min value in right subtree: {minValue}. Replacing and deleting duplicate.");
+            
+            current.Value = minValue;
+            current.Right = RecursiveDelete(current.Right, minValue);
+        }
+
+        return current;
+    }
+
+    private int MinValue(Node? currentNode)
+    {
+        while (currentNode!.Left != null)
+        {
+            currentNode = currentNode.Left;
+        }
+
+        return currentNode.Value;
     }
 
 
