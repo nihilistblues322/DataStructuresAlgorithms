@@ -1,12 +1,8 @@
 ﻿namespace BinarySearchTree;
 
-public class Node
+public class Node(int value)
 {
-    public int Value;
+    public readonly int Value = value;
     public Node? Left;
     public Node? Right;
-    public Node(int value)
-    {
-        Value = value;
-    }
 }

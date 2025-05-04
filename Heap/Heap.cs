@@ -62,7 +62,7 @@ public class Heap
     private void SinkDown(int index)
     {
         int maxIndex = index;
-        
+
         while (true)
         {
             int leftIndex = LeftChild(index);

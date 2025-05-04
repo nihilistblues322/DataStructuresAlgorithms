@@ -66,6 +66,80 @@ public class BinarySearchTree
         return false;
     }
 
+    public bool RecursiveContains(int value)
+    {
+        return RecursiveContains(_root, value);
+    }
+
+    private static bool RecursiveContains(Node? current, int value)
+    {
+        if (current == null)
+        {
+            Console.WriteLine($"Reached a null node. {value} not found.");
+            return false;
+        }
+
+        Console.WriteLine($"Visiting node with value: {current.Value}");
+
+        if (current.Value == value)
+        {
+            Console.WriteLine($"Found value: {value}!");
+            return true;
+        }
+
+        if (value < current.Value)
+        {
+            Console.WriteLine($"Going left: {value} < {current.Value}");
+            return RecursiveContains(current.Left, value);
+        }
+        else
+        {
+            Console.WriteLine($"Going right: {value} > {current.Value}");
+            return RecursiveContains(current.Right, value);
+        }
+    }
+
+    public void RecursiveInsert(int value)
+    {
+        if (_root == null)
+        {
+            Console.WriteLine($"Inserting {value} as root.");
+            _root = new Node(value);
+        }
+        else
+        {
+            Console.WriteLine($"Starting recursive insert for {value}.");
+            _root = RecursiveInsert(_root, value);
+        }
+    }
+
+    private Node RecursiveInsert(Node? current, int value)
+    {
+        if (current == null)
+        {
+            Console.WriteLine($"Inserting {value} at null position.");
+            return new Node(value);
+        }
+
+        if (value < current.Value)
+        {
+            Console.WriteLine($"Going left: {value} < {current.Value}");
+            current.Left = RecursiveInsert(current.Left, value);
+        }
+        else if (value > current.Value)
+        {
+            Console.WriteLine($"Going right: {value} > {current.Value}");
+            current.Right = RecursiveInsert(current.Right, value);
+        }
+        else
+        {
+            Console.WriteLine($"Value {value} already exists, skipping insert.");
+        }
+
+        return current;
+    }
+
+
     public void PrintTree()
     {
         PrintNode(_root, "", true, 0);
