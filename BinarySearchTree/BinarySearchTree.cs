@@ -66,6 +66,106 @@ public class BinarySearchTree
         return false;
     }
 
+    public bool Delete(int value)
+    {
+        Node? current = _root;
+        Node? parent = null;
+
+        while (current != null)
+        {
+            if (value < current.Value)
+            {
+                parent = current;
+                current = current.Left;
+            }
+            else if (value > current.Value)
+            {
+                parent = current;
+                current = current.Right;
+            }
+            else
+            {
+                if (current.Left == null && current.Right == null)
+                {
+                    ReplaceChild(parent, current, null);
+                }
+                else if (current.Left == null)
+                {
+                    ReplaceChild(parent, current, current.Right);
+                }
+                else if (current.Right == null)
+                {
+                    ReplaceChild(parent, current, current.Left);
+                }
+                else
+                {
+                    Node? minParent = current;
+                    Node min = current.Right;
+                    while (min.Left != null)
+                    {
+                        minParent = min;
+                        min = min.Left;
+                    }
+
+                    current.Value = min.Value;
+
+                    if (minParent.Left == min)
+                    {
+                        minParent.Left = min.Right;
+                    }
+                    else
+                    {
+                        minParent.Right = min.Right;
+                    }
+                }
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private void ReplaceChild(Node? parent, Node current, Node? newChild)
+    {
+        if (parent == null)
+        {
+            _root = newChild;
+        }
+        else if (parent.Left == current)
+        {
+            parent.Left = newChild;
+        }
+        else if (parent.Right == current)
+        {
+            parent.Right = newChild;
+        }
+    }
+
+    public List<int> BreadthFirstSearch()
+    {
+        Node current = _root!;
+        
+        Queue<Node> queue = new();
+        List<int> result = new();
+
+        queue.Enqueue(current);
+
+        while (queue.Count > 0)
+        {
+            current = queue.Dequeue();
+            result.Add(current.Value);
+
+            if (current.Left != null) queue.Enqueue(current.Left);
+            if (current.Right != null) queue.Enqueue(current.Right);
+        }
+
+        return result;
+    }
+
+
+    #region recursion
+
     public bool RecursiveContains(int value)
     {
         return RecursiveContains(_root, value);
@@ -76,7 +176,7 @@ public class BinarySearchTree
         if (current == null)
         {
             Console.WriteLine($"Reached a null node. {value} not found.");
-            
+
             return false;
         }
 
@@ -85,20 +185,20 @@ public class BinarySearchTree
         if (current.Value == value)
         {
             Console.WriteLine($"Found value: {value}!");
-            
+
             return true;
         }
 
         if (value < current.Value)
         {
             Console.WriteLine($"Going left: {value} < {current.Value}");
-            
+
             return RecursiveContains(current.Left, value);
         }
         else
         {
             Console.WriteLine($"Going right: {value} > {current.Value}");
-            
+
             return RecursiveContains(current.Right, value);
         }
     }
@@ -108,13 +208,13 @@ public class BinarySearchTree
         if (_root == null)
         {
             Console.WriteLine($"Inserting {value} as root.");
-            
+
             _root = new Node(value);
         }
         else
         {
             Console.WriteLine($"Starting recursive insert for {value}.");
-            
+
             _root = RecursiveInsert(_root, value);
         }
     }
@@ -124,20 +224,20 @@ public class BinarySearchTree
         if (current == null)
         {
             Console.WriteLine($"Inserting {value} at null position.");
-            
+
             return new Node(value);
         }
 
         if (value < current.Value)
         {
             Console.WriteLine($"Going left: {value} < {current.Value}");
-            
+
             current.Left = RecursiveInsert(current.Left, value);
         }
         else if (value > current.Value)
         {
             Console.WriteLine($"Going right: {value} > {current.Value}");
-            
+
             current.Right = RecursiveInsert(current.Right, value);
         }
         else
@@ -159,20 +259,20 @@ public class BinarySearchTree
         if (current == null)
         {
             Console.WriteLine($"Value {value} not found in the tree.");
-            
+
             return null;
         }
 
         if (value < current.Value)
         {
             Console.WriteLine($"Going LEFT to delete {value} (current: {current.Value})");
-            
+
             current.Left = RecursiveDelete(current.Left, value);
         }
         else if (value > current.Value)
         {
             Console.WriteLine($"Going RIGHT to delete {value} (current: {current.Value})");
-            
+
             current.Right = RecursiveDelete(current.Right, value);
         }
         else
@@ -182,30 +282,30 @@ public class BinarySearchTree
             if (current.Left == null && current.Right == null)
             {
                 Console.WriteLine($" - Node {current.Value} is a leaf. Deleting.");
-                
+
                 return null;
             }
 
             if (current.Left == null)
             {
                 Console.WriteLine($" - Node {current.Value} has only right child. Replacing with right child.");
-                
+
                 return current.Right;
             }
 
             if (current.Right == null)
             {
                 Console.WriteLine($" - Node {current.Value} has only left child. Replacing with left child.");
-                
+
                 return current.Left;
             }
 
             Console.WriteLine($" - Node {current.Value} has TWO children. Finding min in right subtree...");
 
             int minValue = MinValue(current.Right);
-            
+
             Console.WriteLine($" - Min value in right subtree: {minValue}. Replacing and deleting duplicate.");
-            
+
             current.Value = minValue;
             current.Right = RecursiveDelete(current.Right, minValue);
         }
@@ -223,6 +323,10 @@ public class BinarySearchTree
         return currentNode.Value;
     }
 
+    #endregion
+
+
+    #region print
 
     public void PrintTree()
     {
@@ -256,4 +360,6 @@ public class BinarySearchTree
 
         PrintNode(node.Left, indent + (isRight ? "│   " : "    "), false, level + 1);
     }
+
+    #endregion
 }

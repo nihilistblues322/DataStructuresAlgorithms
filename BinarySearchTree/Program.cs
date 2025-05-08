@@ -21,17 +21,25 @@ class Program
         //
         // Console.WriteLine(bst.RecursiveContains(30));
         // Console.WriteLine(bst.RecursiveContains(92));
-        
+
         bst.RecursiveInsert(76);
         bst.RecursiveInsert(54);
         bst.RecursiveInsert(87);
         bst.RecursiveInsert(43);
         bst.RecursiveInsert(23);
         bst.RecursiveInsert(47);
-        
+        bst.RecursiveInsert(96);
+        bst.RecursiveInsert(87);
+        bst.RecursiveInsert(79);
+
+    
+
         // bst.RecursiveDelete(43);
-        
+
         bst.PrintTree();
+        Console.WriteLine();
+        
+        bst.BreadthFirstSearch().ForEach(i => Console.Write($"{i}, "));
 
         // Console.WriteLine("----------------------------------");
         //
