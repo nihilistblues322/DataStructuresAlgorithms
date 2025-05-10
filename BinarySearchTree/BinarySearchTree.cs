@@ -99,7 +99,7 @@ public class BinarySearchTree
                 }
                 else
                 {
-                    Node? minParent = current;
+                    Node minParent = current;
                     Node min = current.Right;
 
                     while (min.Left != null)
@@ -164,7 +164,7 @@ public class BinarySearchTree
         return result;
     }
 
-    public List<int> DepthFirstSearchPreOrder()
+    public List<int> DepthFirstSearchPreOrderIterative()
     {
         var result = new List<int>();
         if (_root == null) return result;
@@ -176,7 +176,7 @@ public class BinarySearchTree
         {
             var current = stack.Pop();
             result.Add(current.Value);
-            
+
             if (current.Right != null)
                 stack.Push(current.Right);
 
@@ -186,18 +186,6 @@ public class BinarySearchTree
 
         return result;
     }
-
-    // Шаг | Стек (сверху вниз) | Действие               | Результат
-    // ----|--------------------|-------------------------|-------------------
-    // 1   | [8]                | Pop 8, push 10, 3       | [8]
-    // 2   | [10, 3]            | Pop 3, push 6, 1        | [8, 3]
-    // 3   | [10, 6, 1]         | Pop 1                   | [8, 3, 1]
-    // 4   | [10, 6]            | Pop 6, push 7, 4        | [8, 3, 1, 6]
-    // 5   | [10, 7, 4]         | Pop 4                   | [8, 3, 1, 6, 4]
-    // 6   | [10, 7]            | Pop 7                   | [8, 3, 1, 6, 4, 7]
-    // 7   | [10]               | Pop 10, push 14         | [8, 3, 1, 6, 4, 7, 10]
-    // 8   | [14]               | Pop 14, push 13         | [8, 3, 1, 6, 4, 7, 10, 14]
-    // 9   | [13]               | Pop 13                  | [8, 3, 1, 6, 4, 7, 10, 14, 13]
 
     public List<int> DepthFirstSearchPreOrderRecursive()
     {
@@ -212,6 +200,51 @@ public class BinarySearchTree
         result.Add(current.Value);
         DfsPreOrderRecursive(current.Left, result);
         DfsPreOrderRecursive(current.Right, result);
+    }
+
+    public List<int> DepthFirstSearchPostOrderIterative()
+    {
+        var result = new List<int>();
+        if (_root == null) return result;
+
+        var stack1 = new Stack<Node>();
+        var stack2 = new Stack<Node>();
+        stack1.Push(_root);
+
+        while (stack1.Count > 0)
+        {
+            var current = stack1.Pop();
+            stack2.Push(current);
+
+            if (current.Left != null)
+                stack1.Push(current.Left);
+
+            if (current.Right != null)
+                stack1.Push(current.Right);
+        }
+
+        while (stack2.Count > 0)
+        {
+            result.Add(stack2.Pop().Value);
+        }
+
+        return result;
+    }
+
+    public List<int> DepthFirstSearchPostOrderRecursive()
+    {
+        var result = new List<int>();
+        DfsPostOrderRecursive(_root, result);
+        return result;
+    }
+
+    private void DfsPostOrderRecursive(Node? current, List<int> result)
+    {
+        if (current == null) return;
+
+        DfsPostOrderRecursive(current.Left, result);
+        DfsPostOrderRecursive(current.Right, result);
+        result.Add(current.Value);
     }
 
 
