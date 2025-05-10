@@ -101,6 +101,7 @@ public class BinarySearchTree
                 {
                     Node? minParent = current;
                     Node min = current.Right;
+
                     while (min.Left != null)
                     {
                         minParent = min;
@@ -145,7 +146,7 @@ public class BinarySearchTree
     public List<int> BreadthFirstSearch()
     {
         Node current = _root!;
-        
+
         Queue<Node> queue = new();
         List<int> result = new();
 
@@ -161,6 +162,56 @@ public class BinarySearchTree
         }
 
         return result;
+    }
+
+    public List<int> DepthFirstSearchPreOrder()
+    {
+        var result = new List<int>();
+        if (_root == null) return result;
+
+        var stack = new Stack<Node>();
+        stack.Push(_root);
+
+        while (stack.Count > 0)
+        {
+            var current = stack.Pop();
+            result.Add(current.Value);
+            
+            if (current.Right != null)
+                stack.Push(current.Right);
+
+            if (current.Left != null)
+                stack.Push(current.Left);
+        }
+
+        return result;
+    }
+
+    // Шаг | Стек (сверху вниз) | Действие               | Результат
+    // ----|--------------------|-------------------------|-------------------
+    // 1   | [8]                | Pop 8, push 10, 3       | [8]
+    // 2   | [10, 3]            | Pop 3, push 6, 1        | [8, 3]
+    // 3   | [10, 6, 1]         | Pop 1                   | [8, 3, 1]
+    // 4   | [10, 6]            | Pop 6, push 7, 4        | [8, 3, 1, 6]
+    // 5   | [10, 7, 4]         | Pop 4                   | [8, 3, 1, 6, 4]
+    // 6   | [10, 7]            | Pop 7                   | [8, 3, 1, 6, 4, 7]
+    // 7   | [10]               | Pop 10, push 14         | [8, 3, 1, 6, 4, 7, 10]
+    // 8   | [14]               | Pop 14, push 13         | [8, 3, 1, 6, 4, 7, 10, 14]
+    // 9   | [13]               | Pop 13                  | [8, 3, 1, 6, 4, 7, 10, 14, 13]
+
+    public List<int> DepthFirstSearchPreOrderRecursive()
+    {
+        var result = new List<int>();
+        DfsPreOrderRecursive(_root, result);
+        return result;
+    }
+
+    private void DfsPreOrderRecursive(Node? current, List<int> result)
+    {
+        if (current == null) return;
+        result.Add(current.Value);
+        DfsPreOrderRecursive(current.Left, result);
+        DfsPreOrderRecursive(current.Right, result);
     }
 
 
