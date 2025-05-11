@@ -1,11 +1,11 @@
-﻿namespace Sorting;
+﻿namespace BasicSorting;
 
 class Program
 {
     static void Main(string[] args)
     {
         int[] array = [4, 2, 6, 5, 1, 3];
-        SelectionSort(array);
+        InsertionSort(array);
         Console.WriteLine(string.Join(", ", array));
     }
 
@@ -59,6 +59,22 @@ class Program
             if (i != min)
             {
                 (array[i], array[min]) = (array[min], array[i]);
+            }
+        }
+    }
+
+    static void InsertionSort(int[] array)
+    {
+        int n = array.Length;
+        for (int i = 1; i < n; i++)
+        {
+            int current = array[i];
+            int j = i - 1;
+            while (j >= 0 && current < array[j])
+            {
+                array[j + 1] = array[j];
+                array[j] = current;
+                j--;
             }
         }
     }
