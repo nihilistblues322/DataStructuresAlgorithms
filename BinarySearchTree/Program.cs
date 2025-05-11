@@ -39,7 +39,7 @@ class Program
         bst.PrintTree();
         Console.WriteLine();
         
-        bst.DepthFirstSearchPostOrderIterative().ForEach(i => Console.Write($"{i}, "));
+        bst.DepthFirstSearchInOrderRecursive().ForEach(i => Console.Write($"{i}, "));
 
         // Console.WriteLine("----------------------------------");
         //

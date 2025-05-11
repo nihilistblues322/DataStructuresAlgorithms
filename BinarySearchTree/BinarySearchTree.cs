@@ -247,6 +247,47 @@ public class BinarySearchTree
         result.Add(current.Value);
     }
 
+    public List<int> DepthFirstSearchInOrderIterative()
+    {
+        var result = new List<int>();
+        if (_root == null) return result;
+
+        var stack = new Stack<Node>();
+        Node current = _root;
+
+        while (current != null || stack.Count > 0)
+        {
+            while (current != null)
+            {
+                stack.Push(current);
+                current = current.Left!;
+            }
+
+            current = stack.Pop();
+            result.Add(current.Value);
+
+            current = current.Right!;
+        }
+
+        return result;
+    }
+
+    public List<int> DepthFirstSearchInOrderRecursive()
+    {
+        var result = new List<int>();
+        DfsInOrderRecursive(_root, result);
+        return result;
+    }
+
+    private void DfsInOrderRecursive(Node? current, List<int> result)
+    {
+        if (current == null) return;
+
+        DfsInOrderRecursive(current.Left, result);
+        result.Add(current.Value);
+        DfsInOrderRecursive(current.Right, result);
+    }
+
 
     #region recursion
 
