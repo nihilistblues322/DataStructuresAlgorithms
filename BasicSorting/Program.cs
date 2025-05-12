@@ -73,9 +73,10 @@ class Program
             while (j >= 0 && current < array[j])
             {
                 array[j + 1] = array[j];
-                array[j] = current;
                 j--;
             }
+
+            array[j + 1] = current;
         }
     }
 }
