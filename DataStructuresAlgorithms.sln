@@ -30,8 +30,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MergeSortOptimized", "Merge
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codewars", "Codewars\Codewars.csproj", "{0F8140FB-8ADA-4B79-B041-C29731CBE5D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeetCode", "LeetCode\LeetCode.csproj", "{00CE7F82-6127-4B79-8911-673E0E253D53}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -98,9 +96,5 @@ Global
 		{0F8140FB-8ADA-4B79-B041-C29731CBE5D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F8140FB-8ADA-4B79-B041-C29731CBE5D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F8140FB-8ADA-4B79-B041-C29731CBE5D6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{00CE7F82-6127-4B79-8911-673E0E253D53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{00CE7F82-6127-4B79-8911-673E0E253D53}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{00CE7F82-6127-4B79-8911-673E0E253D53}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{00CE7F82-6127-4B79-8911-673E0E253D53}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
